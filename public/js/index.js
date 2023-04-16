@@ -6,12 +6,9 @@ function changeBorderColor (el) {
     document.documentElement.style.setProperty('--border-color', el.value);
 }
 
-function changeImage(e) {
-   // var imageFile = this.files[0];
-    //var url = window.URL.createObjectURL(imageFile);
-   // document.getElementById("placeholder-img").src = url;
-
-    document.getElementById("placeholder-img").src = document.getElementById("athlete-img").value;
+function changeImage(event) {
+   var image = document.getElementById('placeholder-img');
+   image.src = URL.createObjectURL(event.target.files[0]);
 }
 
 function changeText() {

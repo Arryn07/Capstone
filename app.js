@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
-const connection = require('./connection')
+const connections = require('./connection')
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -74,6 +74,28 @@ app.post('/register', async (req, res) => {
         res.redirect('/register')
     }
     console.log(users)
+})
+
+app.post('/register', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        const myDB = connections.client.db("capstone");
+        const myColl = myDB.collection("users");
+        const doc = {
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+            };
+            console.log(doc)
+        const result = myColl.insertOne(doc);
+        console.log(
+            `A document was inserted with the _id: ${result.insertedId}`,
+            );
+        res.redirect('/login')
+    } catch {
+        console.log('did not work')
+        res.redirect('/register')
+    }
 })
 
 // listen on port 3000

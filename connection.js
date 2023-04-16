@@ -10,21 +10,21 @@ const client = new MongoClient(uri, {
   }
 });
 
-async function newUser() {
-    const myDB = client.db("capstone");
-    const myColl = myDB.collection("users");
-    const doc = { 
-        name: 'erin',
-        email: 'erin@erin.com',
-        password: 'password'
-    };
-    const result = myColl.insertOne(doc);
-    console.log(
-    `A document was inserted with the _id: ${result.insertedId}`,
-    );
-}
+// async function newUser() {
+//     const myDB = client.db("capstone");
+//     const myColl = myDB.collection("users");
+//     const doc = { 
+//         name: 'erin',
+//         email: 'erin@erin.com',
+//         password: 'password'
+//     };
+//     const result = myColl.insertOne(doc);
+//     console.log(
+//     `A document was inserted with the _id: ${result.insertedId}`,
+//     );
+// }
 
-newUser().catch(console.dir);
+//newUser().catch(console.dir);
 
 async function run() {
   try {
@@ -40,3 +40,5 @@ async function run() {
 }
 
 run().catch(console.dir);
+
+module.exports.client = client
