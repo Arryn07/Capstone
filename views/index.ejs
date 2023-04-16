@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Card</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <script src="js/index.js"></script>
+    <header id="main-header">
+        <h1 id="main-header-text">Card Editor</h1>
+        <nav>
+            <a href="#about"><li>About</li></a>
+            <a href="#front"><li>Front</li></a>
+            <a href="#back"><li>Back</li></a>
+            <a href="/login" class="sign-in"><li>Login</li></a>
+        </nav>
+    </header> 
+    
+    <div class="about-container" id="about">
+        <h2 class="about-text">Create and customize your own baseball cards!</h2>
+    </div>
+
+    <div class="front-container" id="front">
+        <div class="form-container">
+            <form id="editor">
+                <h2 class="editor-header">Front Editor</h2>
+                <div class="template-divider"></div>
+                <div class="form-input-container">
+                    <label for="athlete-img" class="form-label">Image:</label>
+                    <input type="file" id="athlete-img" name="athlete" accept="image/jpeg, image/png" onchange="changeImage(this)">
+                    <label for="athlete-name" class="form-label">Athlete Name:</label>
+                    <input type="text" id="athlete-name" name="athlete-name">
+                    <button type="button" id="submit-athlete-name" onclick="changeText()" class="submit-form">Submit</button>
+                    <label for="banner-color" class="form-label">Banner Color:</label>
+                    <input type="color" id="banner-color" name="banner-color" onchange="changeBannerColor(this)">
+                    <label for="border-color" class="form-label">Text Color:</label>
+                    <input type="color" id="text-color" name="text-color" onchange="changeTextColor(this)">
+                    <label for="text-color" class="form-label">Border Color:</label>
+                    <input type="color" id="border-color" name="border-color" onchange="changeBorderColor(this)">
+                    <label for="mascot-img-select" class="form-label">Mascot:</label>
+                    <select id="mascot-img-select" name="mascot-img-select" onchange="setMascotImage(this);">
+                        <option value="../img/bird.svg">Bird</option>
+                        <option value="../img/tiger.svg">Tiger</option>
+                        <option value="../img/lion.svg">Lion</option>
+                        <option value="../img/ram.svg">Ram</option>
+                        <option value="../img/hornet.svg">Hornet</option>
+                        <option value="../img/wolf.svg">Wolf</option>
+                        <option value="">None</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="img-container">
+            <img class="template-img" src="../img/img-placeholder.jpg" alt="a picture of an athlete" name="athlete-img" id="placeholder-img">
+            <div class="img-banner" id="img-banner">Athlete Name</div>
+            <img class="mascot-img" src="../img/bird.svg" name="mascot-img" id="mascot-img">
+        </div>
+    </div>
+
+
+    <div class="back-container" id="back">
+        <div class="stats-container">
+            <div class="stats-form-container">
+                <h2 class="stats-header">Statistics</h2>
+                <form id="stats">
+                    <div class="stat-input-container">
+                        <label for="year" class="year-label">Year:</label>
+                        <input type="text" id="year" name="year">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="games" class="games-label">Games Played:</label>
+                        <input type="text" id="games" name="games">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="at-bats" class="at-bats-label">At-Bats:</label>
+                        <input type="text" id="at-bats" name="at-bats">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="runs" class="runs-label">Runs:</label>
+                        <input type="text" id="runs" name="runs">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="hits" class="hits-label">Hits:</label>
+                        <input type="text" id="hits" name="hits">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="singles" class="singles-label">Singles:</label>
+                        <input type="text" id="singles" name="singles">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="2b" class="2b-label">Doubles:</label>
+                        <input type="text" id="2b" name="2b">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="3b" class="3b-label">Triples:</label>
+                        <input type="text" id="3b" name="3b">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="hr" class="hr-label">Home Runs:</label>
+                        <input type="text" id="hr" name="hr">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="rbi" class="rbi-label">RBIs:</label>
+                        <input type="text" id="rbi" name="rbi">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="bb" class="bb-label">Walks:</label>
+                        <input type="text" id="bb" name="bb">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="so" class="so-label">Strikeouts:</label>
+                        <input type="text" id="so" name="so">
+                    </div>
+                    <div class="stat-input-container">
+                        <label for="sb" class="sb-label">Stolen Bases:</label>
+                        <input type="text" id="sb" name="sb">
+                    </div>
+                </form>
+            </div>
+
+            <div class="stat-input-submit">
+                <button type="submit" class="stat-submit-button submit-form" onclick="submitStats()">Submit Season</button>
+            </div>
+
+            <!-- <div class="calculations-container">
+                <h3 class="calculations-header">Calculations:</h3>
+                <h4 class="average-label" id="average-label">Average: <span id="average" class="average"> 0.00</span></span></h4>
+                <h4 class="obp-label" id="obp-label">On-base percentage: <span id="obp" class="obp"> 0.00</span></span></h4>
+                <h4 class="slg-label" id="slg-label">Slugging percentage: <span id="slg" class="slg"> 0.00</span></span></h4>
+            </div> -->
+        </div>
+
+        <div id="cardback-editor">
+            <div id="cardback-editor-form" class="cardback-container form-container">
+                <div class="editor">
+                    <h2 class="cardback-editor-header">Back Editor</h2>
+                    <div class="template-divider"></div>
+                    <div class="form-input-container">
+                        <label for="team-name" class="team-name-label">Team Name:</label>
+                        <input type="text" id="team-name" name="team-name">
+                        <label for="player-description" class="player-description">Player Description:</label>
+                        <textarea id="player-description" class="player-description" name="player-description" placeholder="Information about the athlete"></textarea>
+                        <button type="button" id="submit-team-name" onclick="submitTeam(), submitDescription()" class="submit-form">Submit</button>
+                        <label for="background-color" class="form-label">Background Color:</label>
+                        <input type="color" id="background-color" name="background-color" onchange="changeBackgroundColor(this)">
+                        <label for="text-color" class="form-label">Text Color:</label>
+                        <input type="color" id="text-color" name="text-color" onchange="changeBackTextColor(this)">
+                        <label for="back-border-color" class="form-label">Border Color:</label>
+                        <input type="color" id="back-border-color" name="back-border-color" onchange="changeBackBorderColor(this)">
+                    </div>
+                </div>
+            </div>
+            <div id="cardback-display" class=" cardback-display">
+                <h2 class="back-athlete-name" id="athlete-name-2">Athlete Name</h2>
+                <h3 class="team-name" id="team-name-text">Team Name</h3>
+                <p id="player-description-display" class="player-description-display">Information about the athlete</p>
+                <table id="stats-table">
+                    <thead class="table-header">
+                        <th>Year</th>
+                        <th>GP</th>
+                        <th>AB</th>
+                        <th>R</th>
+                        <th>H</th>
+                        <th>2B</th>
+                        <th>3B</th>
+                        <th>HR</th>
+                        <th>RBI</th>
+                        <th>BB</th>
+                        <th>SO</th>
+                        <th>SB</th>
+                        <th>AVG</th>
+                        <th>OBP</th>
+                        <th>SLG</th>
+                    </thead>
+                    <tbody id="stats-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<footer class="footer">
+    <p>Erin Bruner</p>
+</footer>
+</html>

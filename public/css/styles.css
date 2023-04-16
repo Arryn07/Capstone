@@ -1,0 +1,415 @@
+:root {
+    --banner-color: red;
+    --border-color: black;
+    --mascot-img: url("../img/img-placeholder.jpg");
+    --banner-text-color: white;
+    --athlete-img: url("../img/bird.svg");
+    --back-border-color: black;
+    --back-background-color: #f2d08d;
+    --back-text-color: black;
+}
+
+html {
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: scroll;
+}
+
+#main-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sign-in {
+    color: white;
+    background-color: rgb(218, 45, 45);
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #cccccc;
+}
+
+.sign-in:hover {
+    color: white;
+    background-color: gray;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-basis: 30%;
+    min-width: 400px;
+    align-items: center;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: gray;
+}
+
+nav li {
+    list-style-type: none;
+    font-size: 25px;
+}
+
+.about-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+}
+
+.about-container::before {
+    content: "";
+    background-attachment: fixed;
+    background-image: url("../img/about-background.jpg");
+    background-position: 0px 0px;
+    background-repeat: repeat;
+    height: 100vh;
+    position: absolute;
+    width: 100vw;
+    background-size: cover;
+}
+
+.about-text {
+    position: relative;
+    color: white;
+    font-size: 40px;
+    line-height: 0.9;
+    text-align: center;
+    padding: 0 75px;
+}
+
+#main-header {
+    background-color: rgb(214, 214, 214);
+    margin: 0;
+    padding: 20px;
+    margin-bottom: auto;
+}
+
+#main-header-text {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.front-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    margin: 0;
+    padding: 50px;
+    flex: 1;
+    flex-basis: 100vh;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    background-color: #eeeeee;
+    box-shadow: 5px 5px 5px #cccccc;
+    border-radius: 15px;
+    padding: 5px 20px 5px 20px;
+    flex-grow: 1;
+    min-height: 400px;
+    max-width: 300px;
+}
+
+.img-container {
+    height: 475px;
+}
+
+#athlete-img {
+    src: var(--athlete-img);
+}
+
+.editor-header {
+    align-self: center;
+}
+
+#editor {
+    flex-basis: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.template-divider {
+    width: 100%;
+    background-color: gray;
+    height: 1px;
+    align-self: center;
+    margin-bottom: 5px;
+}
+
+.form-label {
+    margin-bottom: 0;
+    margin: 5px 0;
+}
+
+.template-img {
+    border: 10px solid var(--border-color);
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px #cccccc;
+}
+
+.img-banner {
+    background-color: var(--banner-color);
+    border-left: none;
+    color: var(--banner-text-color);
+    font-size: 25px;
+    position: relative;
+    bottom: 100px;
+    left: 10px;
+    padding: 0px 50px 0px 10px;
+    z-index: 1;
+    width: 225px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-clip-path: polygon(0 0, 0 100%, 100% 100%, 100%, 0%, 850% 0);
+        clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 100%, 85% 0);
+}
+
+#mascot-img {
+    position: relative;
+    bottom: 175px;
+    left: 150px;
+    padding: 0px 50px 0px 10px;
+    z-index: 1;
+    height: 100px;
+    width: 200px;
+}
+
+.form-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.form-input-container > label {
+    margin-top: 15px;
+}
+
+.form-input-container:first-child {
+    padding-top: 0;
+}
+
+.back-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stats-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 30px 0 30px;
+}
+
+#stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 75%;
+    border: 2px solid black;
+    padding: 30px;
+}
+
+.stat-input-container {
+    flex: 1 1 0px;
+    padding: 3px;
+    max-width: 130px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 3px;
+}
+
+.stat-input-container input {
+    width: 40px;
+    height: 20px;
+}
+
+.stat-input-container label {
+    width: 75px;
+}
+
+.stats-header {
+    text-align: center;
+}
+
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.stat-input-submit {
+    padding: 20px;
+}
+
+.submit-form:hover {
+    color: white;
+    background-color: gray;
+    transform: scale(.95);
+}
+
+.submit-form {
+    color: white;
+    background-color: rgb(218, 45, 45);
+    padding: 5px 10px 5px 10px;
+    margin: 5px 0;
+    border-color: rgb(218, 45, 45);
+    border-radius: 5px;
+    width: 75px;
+    border: none;
+    box-shadow: 5px 5px 5px #cccccc;
+}
+
+#cardback-editor {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    margin: 0;
+    padding: 50px;
+    flex: 1;
+    width: 100%;
+}
+
+#cardback-editor-form {
+    flex-basis: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.cardback-display {
+    border: 10px solid var(--back-border-color);
+    background-color: var(--back-background-color);
+    color: var(--back-text-color);
+    width: 475px;
+    height: 300px;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px #cccccc;
+}
+
+.back-athlete-name {
+    font-size: 30px;
+    margin: 5px;
+}
+
+.team-name {
+    font-size: 20px;
+    margin: 5px 10px;
+}
+
+#stats-table {
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.player-description-display {
+    size: 10px;
+    font-style: italic;
+    margin: 5px 15px 5px 15px;
+}
+
+th {
+    border-bottom: 1px solid black;
+}
+
+.footer {
+    background-color:rgb(214, 214, 214);
+    display: flex;
+    justify-content: center;
+}
+
+#tbody {
+    z-index: 1;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.login-email {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-email {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-name {
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-submit {
+    align-self: center;
+}
+
+.register-submit {
+    align-self: center;
+}
