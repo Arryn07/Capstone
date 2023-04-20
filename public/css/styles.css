@@ -423,3 +423,21 @@ th {
 .register-submit {
     align-self: center;
 }
+
+.save-img-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#save-front {
+    margin-top: 30px;
+    width: 150px;
+    height: 50px;
+    font-size: large;
+    align-self: center;
+}
+
+.screenshot {
+    width: 150px;
+    height: 150px;
+}

@@ -1,3 +1,5 @@
+import { html2canvas } from "html2canvas";
+
 function changeBannerColor (el) {
     document.documentElement.style.setProperty('--banner-color', el.value);
 }
@@ -139,4 +141,10 @@ function changeBackTextColor (el) {
 
 function changeBackBorderColor (el) {
     document.documentElement.style.setProperty('--back-border-color', el.value);
+}
+
+function saveFront() {
+    html2canvas(document.getElementById("img_container")).then(function(canvas){
+      document.getElementById('frontScreenshot_output').src = canvas.toDataURL();
+    });
 }
