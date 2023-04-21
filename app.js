@@ -16,6 +16,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 require('dotenv').config();
 const User = require('./models/user')
+const jwt = require('jsonwebtoken')
 
 // DB Connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -62,10 +63,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //Import routes
-const userRoutes = require('./routes/user')
+//const userRoutes = require('./routes/user')
 
 //Using routes
-app.use('/api', userRoutes)
+//app.use('/api', userRoutes)
 
 // set views
 app.set('views', './views')
@@ -84,7 +85,7 @@ app.get('/register', (req, res) => {
 })
 
 //register
-app.post('/api', (req, res) => {
+app.post('/register', (req, res) => {
     const user = new User({ 
         name: req.body.name, 
         email: req.body.email, 
@@ -97,22 +98,25 @@ app.post('/api', (req, res) => {
         })
         .catch(() => {
         console.log("Unable to add user")
+        res.redirect('/register')
     })
 })
 
 //login
-app.post('/api', (req, res) => {
+app.post('/login', (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
-    User.findOne({email}, (err, user) => {
-        if(err || !email) {
-            console.log('Email was not found')
-        }
+    User.findOne({email: email}).then(user => {
+        // if(!email) {
+        //     console.log('This is not a valid email')
+        //     res.redirect('/login')
+        //     alert('Email is not valid')
+        // }
 
         //Authenticate
-        if(user.authenticate(password)) {
-            console.log('Email and password do not match')
+        if(!user.authenticate(password)) {
+            console.log('The password does not match')
         }
 
         const token = jwt.sign({_id: user._id}, process.env.SECRET)
@@ -120,8 +124,7 @@ app.post('/api', (req, res) => {
         res.cookie('token', token, { expire: new Date() + 1})
 
         const { _id, name, email} = user
-        console.log('success')
-        res.redirect('/')
+        console.log(res.json);
         return res.json({
             token,
             user: {
@@ -130,43 +133,16 @@ app.post('/api', (req, res) => {
                 email
             }
         })
-    })
+       })
+
+    // User.findOne({email}, (user)).then(() => {
+    //     if(!email) {
+    //         console.log('Email was not found')
+    //     }
+
+        
+    // })
 })
-
-
-// app.post('/login', passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//     failureFlash: true
-// }))
-
-// app.post('/login', (req, res) => {
-//     const myDB = connections.client.db("capstone");
-//     connections.MongoClient.connect(connections.uri, (error) => {
-//         if(error)
-//         console.log(error)
-//             myDB.collection("users").find({ email: req.body.email }).toArray((err, user) => {
-//                 if(err)
-//                 console.log(err)
-//                 if(!user[0]) {
-//                     console.log("User not found")
-//                     res.status(404).send("User not found")
-//                 } else {
-//                     bcrypt.compare(req.body.password, user[0].password).then(function() {
-//                         console.log(user[0].password)
-//                         console.log(req.body.login_password)
-//                         console.log(bool)
-//                         if(bool == false) {
-//                             res.status(400).send("Invalid password")
-//                         } else {
-//                             res.send("The username and password combination is correct!")
-//                         }
-//                     }).catch(dberr)
-//                 }
-//             })
-//     })
-//     console.log('login did not work');
-// })
 
 // listen on port 3000
 app.listen(port, () => console.info(`Listening on port ${port}`))
