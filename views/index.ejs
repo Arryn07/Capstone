@@ -8,20 +8,14 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <script src="js/index.js"></script>
     <header id="main-header">
         <h1 id="main-header-text">Card Editor</h1>
         <nav>
-            <a href="#about"><li>About</li></a>
             <a href="#front"><li>Front</li></a>
             <a href="#back"><li>Back</li></a>
-            <a href="/login" class="sign-in"><li>Login</li></a>
+            <a href="/about" class="sign-in"><li>Log Out</li></a>
         </nav>
     </header> 
-    
-    <div class="about-container" id="about">
-        <h2 class="about-text">Create and customize your own baseball cards!</h2>
-    </div>
 
     <div class="front-container" id="front">
         <div class="form-container">
@@ -68,72 +62,75 @@
         <div class="stats-container">
             <div class="stats-form-container">
                 <h2 class="stats-header">Statistics</h2>
-                <form id="stats">
-                    <div class="stat-input-container">
-                        <label for="year" class="year-label">Year:</label>
-                        <input type="text" id="year" name="year">
+                <form id="stats" method="POST" action="/post-stats">
+                    <div class="stats-box">
+                        <div class="stat-input-container">
+                            <label for="year" class="year-label">Year:</label>
+                            <input type="text" id="year" name="year" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="games" class="games-label">Games Played:</label>
+                            <input type="text" id="games" name="games" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="at-bats" class="at-bats-label">At-Bats:</label>
+                            <input type="text" id="at-bats" name="atBats" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="runs" class="runs-label">Runs:</label>
+                            <input type="text" id="runs" name="runs" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="hits" class="hits-label">Hits:</label>
+                            <input type="text" id="hits" name="hits" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="singles" class="singles-label">Singles:</label>
+                            <input type="text" id="singles" name="singles" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="2b" class="2b-label">Doubles:</label>
+                            <input type="text" id="2b" name="doubles" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="3b" class="3b-label">Triples:</label>
+                            <input type="text" id="3b" name="triples" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="hr" class="hr-label">Home Runs:</label>
+                            <input type="text" id="hr" name="hr" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="rbi" class="rbi-label">RBIs:</label>
+                            <input type="text" id="rbi" name="rbi" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="bb" class="bb-label">Walks:</label>
+                            <input type="text" id="bb" name="bb" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="so" class="so-label">Strikeouts:</label>
+                            <input type="text" id="so" name="so" required>
+                        </div>
+                        <div class="stat-input-container">
+                            <label for="sb" class="sb-label">Stolen Bases:</label>
+                            <input type="text" id="sb" name="sb" required>
+                        </div>
                     </div>
                     <div class="stat-input-container">
-                        <label for="games" class="games-label">Games Played:</label>
-                        <input type="text" id="games" name="games">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="at-bats" class="at-bats-label">At-Bats:</label>
-                        <input type="text" id="at-bats" name="at-bats">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="runs" class="runs-label">Runs:</label>
-                        <input type="text" id="runs" name="runs">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="hits" class="hits-label">Hits:</label>
-                        <input type="text" id="hits" name="hits">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="singles" class="singles-label">Singles:</label>
-                        <input type="text" id="singles" name="singles">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="2b" class="2b-label">Doubles:</label>
-                        <input type="text" id="2b" name="2b">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="3b" class="3b-label">Triples:</label>
-                        <input type="text" id="3b" name="3b">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="hr" class="hr-label">Home Runs:</label>
-                        <input type="text" id="hr" name="hr">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="rbi" class="rbi-label">RBIs:</label>
-                        <input type="text" id="rbi" name="rbi">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="bb" class="bb-label">Walks:</label>
-                        <input type="text" id="bb" name="bb">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="so" class="so-label">Strikeouts:</label>
-                        <input type="text" id="so" name="so">
-                    </div>
-                    <div class="stat-input-container">
-                        <label for="sb" class="sb-label">Stolen Bases:</label>
-                        <input type="text" id="sb" name="sb">
+                        <button type="submit" class="submit-form stats-to-db">Send to database</button>
                     </div>
                 </form>
             </div>
 
+            <div class="fromDB-container">
+                <input type="text" id="fromDB" placeholder="Enter year">
+                <button type="submit" class="submit-form stats-to-db" id="submit-to-db">Pull from database</button>
+            </div>
             <div class="stat-input-submit">
                 <button type="submit" class="stat-submit-button submit-form" onclick="submitStats()">Submit Season</button>
             </div>
 
-            <!-- <div class="calculations-container">
-                <h3 class="calculations-header">Calculations:</h3>
-                <h4 class="average-label" id="average-label">Average: <span id="average" class="average"> 0.00</span></span></h4>
-                <h4 class="obp-label" id="obp-label">On-base percentage: <span id="obp" class="obp"> 0.00</span></span></h4>
-                <h4 class="slg-label" id="slg-label">Slugging percentage: <span id="slg" class="slg"> 0.00</span></span></h4>
-            </div> -->
         </div>
 
         <div id="cardback-editor">
@@ -184,6 +181,7 @@
             </div>
         </div>
     </div>
+<script src="js/index.js"></script>
 </body>
 <footer class="footer">
     <p>Erin Bruner</p>

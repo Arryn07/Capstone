@@ -1,11 +1,13 @@
 <head>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
+<header id="main-header">
+    <h1 id="main-header-text">Card Editor</h1>
+</header> 
+
 <div class="login-container">
     <h1>Login</h1>
-    <% if (messages.error) { %>
-        <%= messages.error %>
-        <% } %>
     <form action="/login" method="POST" class="login-form">
         <div class="login-email">
             <label for="email">Email</label>
@@ -18,5 +20,9 @@
         <button type="submit" class="submit-form login-submit">Login</button>
     </form>
     <a href="/register">Register</a>
-    <a href="/">Cancel</a>
+    <a href="/about">Cancel</a>
 </div>
+
+<footer class="footer">
+    <p>Erin Bruner</p>
+</footer>

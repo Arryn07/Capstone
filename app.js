@@ -16,10 +16,14 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 require('dotenv').config();
 const User = require('./models/user')
+const Stats = require('./models/stats')
 const jwt = require('jsonwebtoken')
+const path = require('path')
 
 // DB Connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const user = require('./models/user')
+const { error } = require('console')
 const uri = 'mongodb+srv://erinkb1996:EKBru1219@capstonecluster.lwleqsb.mongodb.net/capstone?retryWrites=true&w=majority'
 mongoose.connect(uri)
 
@@ -62,6 +66,9 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.resolve(__dirname, 'public')));
+
 //Import routes
 //const userRoutes = require('./routes/user')
 
@@ -82,6 +89,10 @@ app.get('/login', (req, res) => {
 
 app.get('/register', (req, res) => {
     res.render('register.ejs')
+})
+
+app.get('/about', (req, res) => {
+    res.render('about.ejs')
 })
 
 //register
@@ -108,41 +119,56 @@ app.post('/login', (req, res) => {
     const password = req.body.password
 
     User.findOne({email: email}).then(user => {
-        // if(!email) {
-        //     console.log('This is not a valid email')
-        //     res.redirect('/login')
-        //     alert('Email is not valid')
-        // }
-
-        //Authenticate
-        if(!user.authenticate(password)) {
+        if(user === null) {
+            console.log('This is not a valid email')
+            res.redirect('/login')
+            
+            //Authenticate
+        } else if (!user.authenticate(password)) {
             console.log('The password does not match')
+            res.redirect('/login')
+        } else if (user.authenticate(password)) {
+            console.log('Success!')
+            req.session.user = user.email
+            res.redirect('/')
         }
-
-        const token = jwt.sign({_id: user._id}, process.env.SECRET)
-
-        res.cookie('token', token, { expire: new Date() + 1})
-
-        const { _id, name, email} = user
-        console.log(res.json);
-        return res.json({
-            token,
-            user: {
-                _id,
-                name,
-                email
-            }
         })
-       })
-
-    // User.findOne({email}, (user)).then(() => {
-    //     if(!email) {
-    //         console.log('Email was not found')
-    //     }
-
-        
-    // })
 })
+
+app.get('/', (req, res) => {
+})
+
+// Send form data to database
+app.post('/post-stats', (req, res) => {
+    const stats = new Stats({ 
+        _id: req.body.year, 
+        email: req.session.user,
+        games: req.body.games, 
+        atBats: req.body.atBats,
+        runs: req.body.runs,
+        hits: req.body.hits,
+        singles: req.body.singles,
+        doubles: req.body.doubles,
+        triples: req.body.triples,
+        hr: req.body.hr,
+        rbi: req.body.rbi,
+        bb: req.body.bb,
+        so: req.body.so,
+        sb: req.body.sb
+    })
+    stats.save (stats, 'capstone')
+        .then(() => {
+            console.log('Success! Stats were added to database: ', stats)
+            res.redirect('/')
+        })
+        .catch(() => {
+        console.log(error)
+        console.log("Unable to add stats")
+        res.redirect('/')
+    })
+});
+
+
 
 // listen on port 3000
 app.listen(port, () => console.info(`Listening on port ${port}`))
