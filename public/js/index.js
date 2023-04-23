@@ -30,9 +30,6 @@ function setMascotImage(select) {
 }
 
 function submitStats() {
-    // let average = document.getElementById("average");
-    // let obp = document.getElementById("obp")
-    // let slg = document.getElementById("slg");
 
     let year = Number(document.getElementById("year").value);
     let games = Number(document.getElementById("games").value);
@@ -48,10 +45,81 @@ function submitStats() {
     let strikeouts = Number(document.getElementById("so").value);
     let stolenBases = Number(document.getElementById("sb").value);
 
-    // displays calculated average, obp, and slg
-    // average.innerHTML = (hits / atBats).toFixed(3);
-    // obp.innerHTML = ((hits + bb)/(atBats + bb)).toFixed(3);
-    // slg.innerHTML = ((singles + (doubles * 2) + (triples * 3) + (hr * 4)) / (atBats)).toFixed(3);
+    let averageText = (hits / atBats).toFixed(3);
+    let obpText= ((hits + bb)/(atBats + bb)).toFixed(3);
+    let slgText = ((singles + (doubles * 2) + (triples * 3) + (hr * 4)) / (atBats)).toFixed(3);
+
+    //creates new row on stats table on back of card
+    let table = document.getElementById("stats-tbody");
+
+    let row = document.createElement("tr");
+
+    let c1 = document.createElement("td");
+    let c2 = document.createElement("td");
+    let c3 = document.createElement("td");
+    let c4 = document.createElement("td");
+    let c5 = document.createElement("td");
+    let c6 = document.createElement("td");
+    let c7 = document.createElement("td");
+    let c8 = document.createElement("td");
+    let c9 = document.createElement("td");
+    let c10 = document.createElement("td");
+    let c11 = document.createElement("td");
+    let c12 = document.createElement("td");
+    let c13 = document.createElement("td");
+    let c14 = document.createElement("td");
+    let c15 = document.createElement("td");
+
+    c1.innerText = year;
+    c2.innerText = games;
+    c3.innerText = atBats;
+    c4.innerText = runs;
+    c5.innerText = hits;
+    c6.innerText = doubles;
+    c7.innerText = triples;
+    c8.innerText = hr;
+    c9.innerText = rbi;
+    c10.innerText = bb;
+    c11.innerText = strikeouts;
+    c12.innerText = stolenBases;
+    c13.innerText = averageText;
+    c14.innerText = obpText;
+    c15.innerText = slgText;
+
+    row.appendChild(c1);
+    row.appendChild(c2);
+    row.appendChild(c3);
+    row.appendChild(c4);
+    row.appendChild(c5);
+    row.appendChild(c6);
+    row.appendChild(c7);
+    row.appendChild(c8);
+    row.appendChild(c9);
+    row.appendChild(c10);
+    row.appendChild(c11);
+    row.appendChild(c12);
+    row.appendChild(c13);
+    row.appendChild(c14);
+    row.appendChild(c15);
+
+    table.appendChild(row);
+}
+
+function renderStats(data) {
+
+    let year = data.id
+    let games = data.games
+    let atBats = data.atBats
+    let runs = data.runs
+    let hits = data.hits
+    let bb =  data.bb
+    let singles = data.singles
+    let doubles = data.doubles
+    let triples = data.triples
+    let hr = data.hr
+    let rbi = data.rbi
+    let strikeouts = data.so
+    let stolenBases = data.sb
 
     let averageText = (hits / atBats).toFixed(3);
     let obpText= ((hits + bb)/(atBats + bb)).toFixed(3);
@@ -148,8 +216,22 @@ function changeBackBorderColor (el) {
     document.documentElement.style.setProperty('--back-border-color', el.value);
 }
 
-async function fetchData () {
-    fetch('/get-stats')
-    .then(response => response.json())
-    .then(data => console.log(data))
-}
+const form = document.querySelector('#fromDB-form');
+const tableBody = document.querySelector('#stats-tbody');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault(); // prevents the form from submitting normally
+
+  const year = document.querySelector('#findYear').value;
+
+  try {
+    const response = await fetch(`/get-stats/${year}`);
+    const stats = await response.json();
+
+    renderStats(stats);
+
+  } catch (error) {
+    console.error(error);
+    alert('Something went wrong. Enter another year and try again.')
+  }
+});

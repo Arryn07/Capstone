@@ -17,8 +17,8 @@ const cors = require('cors')
 require('dotenv').config();
 const User = require('./models/user')
 const Stats = require('./models/stats')
-const jwt = require('jsonwebtoken')
 const path = require('path')
+const formatStats = require('./public/js/formatStats.js').formatStats;
 
 // DB Connection
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -102,8 +102,9 @@ app.post('/register', (req, res) => {
             console.log('Success! User was added to database: ', user)
             res.redirect('./login')
         })
-        .catch(() => {
-        console.log("Unable to add user")
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Unable to add user.');
         res.redirect('/register')
     })
 })
@@ -115,12 +116,14 @@ app.post('/login', (req, res) => {
 
     User.findOne({email: email}).then(user => {
         if(user === null) {
-            console.log('This is not a valid email')
+            console.error(error);
+            res.status(500).send('Invalid email.');
             res.redirect('/login')
             
             //Authenticate
         } else if (!user.authenticate(password)) {
-            console.log('The password does not match')
+            console.error(error);
+            res.status(500).send('Password does not match.');
             res.redirect('/login')
         } else if (user.authenticate(password)) {
             console.log('Success!')
@@ -150,21 +153,26 @@ app.post('/post-stats', (req, res) => {
     })
     stats.save(stats, 'capstone')
         .then(() => {
-            console.log('Success! Stats were added to database: ', stats)
+            console.log('Success! Stats were added to database: ')
         })
-        .catch(() => {
-        console.log(error)
-        console.log("Unable to add stats")
+        .catch((error) => {
+        console.error(error)
+        res.status(500).send("Unable to add stats")
     })
 });
 
 // Pull year from database
-app.post('/get-stats', (req, res) => {
-    const id = req.body.findYear
-    const statsPull = Stats.findOne({email: req.session.user, _id: id})
-    .then(sentStats => {console.log({sentStats})})
+app.get('/get-stats/:year', async (req, res) => {
+    const year = req.params.year;
+    try {
+      const sentStats = await Stats.findOne({ email: req.session.user, _id: year });
+      const formattedStats = formatStats(sentStats);
+      res.json(formattedStats);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('An error occurred while fetching the stats.');
+    }
 })
-
 
 // listen on port 3000
 app.listen(port, () => console.info(`Listening on port ${port}`))
