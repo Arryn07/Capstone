@@ -24,6 +24,7 @@ const path = require('path')
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const user = require('./models/user')
 const { error } = require('console')
+const { stringify } = require('querystring')
 const uri = 'mongodb+srv://erinkb1996:EKBru1219@capstonecluster.lwleqsb.mongodb.net/capstone?retryWrites=true&w=majority'
 mongoose.connect(uri)
 
@@ -69,18 +70,12 @@ app.use(passport.session())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, 'public')));
 
-//Import routes
-//const userRoutes = require('./routes/user')
-
-//Using routes
-//app.use('/api', userRoutes)
-
 // set views
 app.set('views', './views')
 app.set('view-engine', 'ejs')
 
 app.get('', (req, res) => {
-    res.render('index.ejs', { name: 'user' })
+    res.render('index.ejs', { name: 'user'})
 })
 
 app.get('/login', (req, res) => {
@@ -135,9 +130,6 @@ app.post('/login', (req, res) => {
         })
 })
 
-app.get('/', (req, res) => {
-})
-
 // Send form data to database
 app.post('/post-stats', (req, res) => {
     const stats = new Stats({ 
@@ -156,18 +148,22 @@ app.post('/post-stats', (req, res) => {
         so: req.body.so,
         sb: req.body.sb
     })
-    stats.save (stats, 'capstone')
+    stats.save(stats, 'capstone')
         .then(() => {
             console.log('Success! Stats were added to database: ', stats)
-            res.redirect('/')
         })
         .catch(() => {
         console.log(error)
         console.log("Unable to add stats")
-        res.redirect('/')
     })
 });
 
+// Pull year from database
+app.post('/get-stats', (req, res) => {
+    const id = req.body.findYear
+    const statsPull = Stats.findOne({email: req.session.user, _id: id})
+    .then(sentStats => {console.log({sentStats})})
+})
 
 
 // listen on port 3000

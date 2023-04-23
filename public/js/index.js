@@ -111,8 +111,15 @@ function submitStats() {
     row.appendChild(c15);
 
     table.appendChild(row);
+}
 
+function deleteRow() {
+    document.getElementById('stats-tbody').deleteRow(0)
+}
+
+function clearForm() {
     document.getElementById("stats").reset();
+    document.getElementById("fromDB-form").reset();
 }
 
 function submitTeam() {
@@ -139,4 +146,10 @@ function changeBackTextColor (el) {
 
 function changeBackBorderColor (el) {
     document.documentElement.style.setProperty('--back-border-color', el.value);
+}
+
+async function fetchData () {
+    fetch('/get-stats')
+    .then(response => response.json())
+    .then(data => console.log(data))
 }

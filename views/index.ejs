@@ -57,7 +57,6 @@
         </div>
     </div>
 
-
     <div class="back-container" id="back">
         <div class="stats-container">
             <div class="stats-form-container">
@@ -124,13 +123,15 @@
             </div>
 
             <div class="fromDB-container">
-                <input type="text" id="fromDB" placeholder="Enter year">
-                <button type="submit" class="submit-form stats-to-db" id="submit-to-db">Pull from database</button>
+                <form id="fromDB-form" method="POST" action="get-stats">
+                    <input type="text" id="findYear" placeholder="Enter year" name="findYear">
+                    <button type="submit" class="submit-form stats-to-db" id="submit-to-db" onclick="fetchData()">Pull from database</button>
+                </form>
             </div>
             <div class="stat-input-submit">
-                <button type="submit" class="stat-submit-button submit-form" onclick="submitStats()">Submit Season</button>
+                <button type="submit" class="stat-submit-button submit-form" onclick="submitStats()">Submit to card</button>
+                <button type="submit" class="stat-submit-button submit-form" onclick="clearForm()">Clear inputs</button>
             </div>
-
         </div>
 
         <div id="cardback-editor">
@@ -153,36 +154,43 @@
                     </div>
                 </div>
             </div>
-            <div id="cardback-display" class=" cardback-display">
-                <h2 class="back-athlete-name" id="athlete-name-2">Athlete Name</h2>
-                <h3 class="team-name" id="team-name-text">Team Name</h3>
-                <p id="player-description-display" class="player-description-display">Information about the athlete</p>
-                <table id="stats-table">
-                    <thead class="table-header">
-                        <th>Year</th>
-                        <th>GP</th>
-                        <th>AB</th>
-                        <th>R</th>
-                        <th>H</th>
-                        <th>2B</th>
-                        <th>3B</th>
-                        <th>HR</th>
-                        <th>RBI</th>
-                        <th>BB</th>
-                        <th>SO</th>
-                        <th>SB</th>
-                        <th>AVG</th>
-                        <th>OBP</th>
-                        <th>SLG</th>
-                    </thead>
-                    <tbody id="stats-tbody">
-                    </tbody>
-                </table>
+            <div class="row-delete-container">
+                <div id="cardback-display" class=" cardback-display">
+                    <h2 class="back-athlete-name" id="athlete-name-2">Athlete Name</h2>
+                    <h3 class="team-name" id="team-name-text">Team Name</h3>
+                    <p id="player-description-display" class="player-description-display">Information about the athlete</p>
+                    <table id="stats-table">
+                        <thead class="table-header">
+                            <th>Year</th>
+                            <th>GP</th>
+                            <th>AB</th>
+                            <th>R</th>
+                            <th>H</th>
+                            <th>2B</th>
+                            <th>3B</th>
+                            <th>HR</th>
+                            <th>RBI</th>
+                            <th>BB</th>
+                            <th>SO</th>
+                            <th>SB</th>
+                            <th>AVG</th>
+                            <th>OBP</th>
+                            <th>SLG</th>
+                        </thead>
+                        <tbody id="stats-tbody">
+                        </tbody>
+                    </table>
+                </div>
+                <button class="submit-form delete-row" onclick="deleteRow()">Delete row</button>
             </div>
         </div>
     </div>
+
+    <button onclick="fetchData()">Press</button>
+
 <script src="js/index.js"></script>
 </body>
+
 <footer class="footer">
     <p>Erin Bruner</p>
 </footer>
